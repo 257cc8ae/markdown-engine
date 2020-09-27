@@ -127,6 +127,15 @@ function markdown(t) {
                     let yt_ele = `<iframe loading="lazy" width="100%" height="56.85%" src="https://www.youtube.com/embed/${yt_es[1]}" frameborder="0" allowfullscreen></iframe>`
                     rs += yt_ele;
                     break
+                case /^>*\s/.test(e):
+                    let quote_es = e.split(" ");
+                    let bq_n = (quote_es[0].match(/\>/g) || []).length;
+                    let bq = "<blockquote><p>";
+                    let bq_end = "</p></blockquote>";
+                    console.log(bq.repeat(bq_n));
+                    let content = e.replace(quote_es[0] + " ", "");
+                    rs += bq.repeat(bq_n) + content + bq_end.repeat(bq_n);
+                    break
                 default:
                     rs += decoration(e) + "<br>";
             };
