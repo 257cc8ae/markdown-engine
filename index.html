@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/vs2015.min.css">
+    <style>
+        html,
+        body {
+            margin: 0;
+        }
+
+        header {
+            width: 100%;
+            height: 50px;
+        }
+
+        main {
+            display: flex;
+            height: calc(100vh - 50px);
+        }
+
+        textarea,
+        .preview_area {
+            width: 50%;
+            height: 100%;
+            flex: 0 0 auto;
+            padding: 0;
+            border: 0;
+        }
+
+        textarea {
+            width: calc(50% - 30px);
+            height: calc(100% - 30px);
+            padding: 15px;
+            font-size: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="render-markdown.css">
+</head>
+
+<body>
+    <header>
+        <button class="run">
+            Run
+        </button>
+    </header>
+    <main>
+        <textarea></textarea>
+        <div class="preview_area markdown">
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+    <script src="render_markdown.js"></script>
+    <script>
+        document.querySelector(".run").addEventListener("click", function () {
+            document.querySelector(".preview_area").innerHTML = markdown(document.querySelector("textarea").value);
+            document.querySelectorAll("pre code").forEach(function (block, i, ar) {
+                hljs.highlightBlock(block);
+            });
+        });
+    </script>
+</body>
+
+</html>
