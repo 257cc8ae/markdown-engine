@@ -58,6 +58,11 @@ function decoration(t) {
             now_s = true;
         };
     };
+    
+    let link = t.match(/!link\((.*)\,(.*)\)/);
+
+    console.log(link[1]);
+    console.log(link[2]);
     return t
 };
 
