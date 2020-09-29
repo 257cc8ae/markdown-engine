@@ -4,6 +4,16 @@ function decoration(t) {
     let now_em = false;
     let now_code = false;
     let now_s = false
+    let links = t.split("@link");
+    console.log(links)
+    for (let i = 0; i < links.length; i++) {
+        if (links[i].match(/\[.*\]\(.*\)/)) {
+            let l = t.replace(/\@link\[.*\]\(.*\)/, `<a href="${links[i].match(/\[(.*)\]\((.*)\)/)[2]}" target="_blank">${links[i].match(/\[(.*)\]\((.*)\)/)[1]}</a>`);
+            console.log(l)
+            links[i] = l;
+        };
+    };
+    t = links.join("");
     for (let i = 0; t.match(/\*{3}/) != null; i++) {
         if (em_and_strong) {
             t = t.replace("***", "</em></strong>");
@@ -58,11 +68,6 @@ function decoration(t) {
             now_s = true;
         };
     };
-    
-    let link = t.match(/!link\((.*)\,(.*)\)/);
-
-    console.log(link[1]);
-    console.log(link[2]);
     return t
 };
 
