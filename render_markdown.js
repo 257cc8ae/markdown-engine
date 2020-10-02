@@ -4,16 +4,11 @@ function decoration(t) {
     let now_em = false;
     let now_code = false;
     let now_s = false
-    let links = t.split("@link");
-    console.log(links)
-    for (let i = 0; i < links.length; i++) {
-        if (links[i].match(/\[.*\]\(.*\)/)) {
-            let l = t.replace(/\@link\[.*\]\(.*\)/, `<a href="${links[i].match(/\[(.*)\]\((.*)\)/)[2]}" target="_blank">${links[i].match(/\[(.*)\]\((.*)\)/)[1]}</a>`);
-            console.log(l)
-            links[i] = l;
-        };
+    // 
+    while (t.match(/\[[^!\[\]\(\)]*\]\([^!\[\]\(\)]*\)/)) {
+        let about_link = t.match(/\[([^!\[\]\(\)]*)\]\(([^!\[\]\(\)]*)\)/);
+        t = t.replace(/\[[^!\[\]\(\)]*\]\([^!\[\]\(\)]*\)/,`<a href="${about_link[2]}" target="_blank">${about_link[1]}</a>`);
     };
-    t = links.join("");
     for (let i = 0; t.match(/\*{3}/) != null; i++) {
         if (em_and_strong) {
             t = t.replace("***", "</em></strong>");
@@ -127,9 +122,9 @@ function markdown(t) {
                     e = "</div>"
                     rs += e;
                     break
-                case /^@img\s/.test(e):
-                    let es = e.split(" ");
-                    let img_ele = `<img src="${es[1]}" loading="lazy" alt="${es[2]}">`;
+                case /^!\[[^!\[\]\(\)]*\]\([^!\[\]\(\)]*\)/.test(e):
+                    let about_img = t.match(/\[([^!\[\]\(\)]*)\]\(([^!\[\]\(\)]*)\)/);
+                    let img_ele = `<img src="${about_img[2]}" loading="lazy" alt="${about_img[1]}">`;
                     rs += img_ele;
                     break
                 case /^@youtube\s/.test(e):
