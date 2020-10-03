@@ -3,7 +3,7 @@ function decoration(t) {
     let now_strong = false;
     let now_em = false;
     let now_code = false;
-    let now_s = false
+    let now_s = false;
     while (t.match(/\[[^!\[\]\(\)]*\]\([^!\[\]\(\)]*\)/)) {
         let about_link = t.match(/\[([^!\[\]\(\)]*)\]\(([^!\[\]\(\)]*)\)/);
         t = t.replace(/\[[^!\[\]\(\)]*\]\([^!\[\]\(\)]*\)/,`<a href="${about_link[2]}" target="_blank">${about_link[1]}</a>`);
@@ -53,20 +53,11 @@ function decoration(t) {
             now_s = true;
         };
     };
-    for (let i = 0; t.match(/:red:/) != null; i++) {
-        if (now_s) {
-            t = t.replace(":red:", "</span>");
-            now_s = false;
-        } else {
-            t = t.replace(":red:", "<span class='red'>");
-            now_s = true;
-        };
-    };
     return t
 };
 
 function markdown(t) {
-    t = t.replace(/</g,"&lt;").replace(/</g,"&gt;");
+    t = t.replace(/</g,"&lt;").replace(/>/g,"&gt;");
     let cs = t.split("\n");
     let rs = ""
     let now_code = false;
@@ -140,9 +131,9 @@ function markdown(t) {
                     
                     rs += tw_ele;
                     break
-                case /^>*\s/.test(e):
+                case /^&gt;*\s/.test(e):
                     let quote_es = e.split(" ");
-                    let bq_n = (quote_es[0].match(/\>/g) || []).length;
+                    let bq_n = (quote_es[0].match(/&gt;/g) || []).length;
                     let bq = "<blockquote><p>";
                     let bq_end = "</p></blockquote>";
                     let content = e.replace(quote_es[0] + " ", "");
