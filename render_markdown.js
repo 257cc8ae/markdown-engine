@@ -40,7 +40,7 @@ function decoration(t) {
             t = t.replace("`", "</code>");
             now_code = false;
         } else {
-            t = t.replace("`", "<code>");
+            t = t.replace("`", "<code class='lm-c'>");
             now_code = true;
         };
     };
@@ -66,6 +66,7 @@ function decoration(t) {
 };
 
 function markdown(t) {
+    t = t.replace(/</g,"&lt;").replace(/</g,"&gt;");
     let cs = t.split("\n");
     let rs = ""
     let now_code = false;
@@ -121,8 +122,8 @@ function markdown(t) {
                     e = "</div>"
                     rs += e;
                     break
-                case /^!\[[^!\[\]\(\)]*\]\([^!\[\]\(\)]*\)/.test(e):
-                    let about_img = t.match(/\[([^!\[\]\(\)]*)\]\(([^!\[\]\(\)]*)\)/);
+                case /^!\[.*\]\(.*\)/.test(e):
+                    let about_img = t.match(/!\[(.*)\]\((.*)\)/);
                     let img_ele = `<img src="${about_img[2]}" loading="lazy" alt="${about_img[1]}">`;
                     rs += img_ele;
                     break
@@ -132,12 +133,9 @@ function markdown(t) {
                     rs += yt_ele;
                     break
                 case /^@twitter\s/.test(e):
-                    console.log("teitte")
                     let tw_es = e.split(" ");
                     let tw_id = tw_es[1].replace(/https:\/\/twitter.com\/.*\//,"");
-                    console.log(tw_id)
                     let iframe_url = `https://platform.twitter.com/embed/index.html?dnt=false&embedId=twitter-widget-1&frame=false&hideCard=false&hideThread=false&id=${tw_id}&lang=jawidgetsVersion=ed20a2b%3A1601588405575&width=550px`;
-                    console.log(iframe_url)
                     let tw_ele = `<div class="iframe-twitter"><iframe loading="lazy" src="${iframe_url}" frameborder="0" scrolling="no"></iframe></div>`;
                     
                     rs += tw_ele;
@@ -147,7 +145,6 @@ function markdown(t) {
                     let bq_n = (quote_es[0].match(/\>/g) || []).length;
                     let bq = "<blockquote><p>";
                     let bq_end = "</p></blockquote>";
-                    console.log(bq.repeat(bq_n));
                     let content = e.replace(quote_es[0] + " ", "");
                     rs += bq.repeat(bq_n) + content + bq_end.repeat(bq_n);
                     break

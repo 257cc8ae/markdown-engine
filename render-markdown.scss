@@ -23,13 +23,52 @@
             left: 0;
         }
     }
+
     .iframe-twitter {
         width: 100%;
         text-align: center;
+
         iframe {
             width: 100%;
             height: max-content;
             max-width: 550px;
         }
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    h4 {
+        font-size: 1.2em;
+    }
+
+    h5 {
+        font-size: 1em;
+    }
+
+    h6 {
+        font-size: 0.9em;
+    }
+
+    .lm-c {
+        background: #eee;
+        color: #333;
+        padding: 2px 5px;
+    }
+
+    .hljs {
+        border-radius: 4px;
+        font-size: 15px;
+        background: #1e1e1e;
+        color: #dcdcdc;
     }
 }
